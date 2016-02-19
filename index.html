@@ -90,12 +90,13 @@
             position: absolute;           
         }
         .sigma-tooltip {
-	   max-width: 240px;
-	   max-height: 280px;
-	   background-color: #F0F0F0;
-	   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-	   border-radius: 6px;
-	}
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            max-width: 400px;
+            max-height: 800px;
+            background-color: #F0F0F0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            border-radius: 6px;
+        }
 	.sigma-tooltip-header {
 	   font-variant: small-caps;
 	   font-size: 130%;
@@ -256,7 +257,8 @@
             if (n.neo4j_labels[0] == 'MARKET')  { n.color = '#6DCE9E'; }
             if (n.neo4j_labels[0] == 'COMPANY') { n.color = '#DE9BF9'; }
             if (n.neo4j_labels[0] == 'CITY')    { n.color = '#68BDF6'; }
-            n.label = n.neo4j_data.title;
+            n.label = n.neo4j_data.name; // Software, Internet, Mobile, etc.
+            n.type  = n.neo4j_labels[0]; // MARKET, COMPANY, CITY, etc.
             n.size = 16.0;
             n.fixed = false;
     });
@@ -266,28 +268,31 @@
 		n.size = 2.1;
 	});
 		
-	var config = {
-	  node: {
-	    show: 'overNode',
-	    hide: 'outNode',
-	    cssClass: 'sigma-tooltip',
-	    position: 'top',
-	    template:
-	    '<div class="arrow"></div>' +
-	    ' <div class="sigma-tooltip-header">{{label}}</div>' +
-	    '  <div class="sigma-tooltip-body">' +
-	    '    <table>' +
-	    '      <tr><th>Právní statut</th> <td>{{neo4j_labels}}</td></tr>' +
-	    '      <tr><th>Sídlo</th> <td>Ceska Republika</td></tr>' +
-	    '    </table>' +
-	    '  </div>' +
-	    '  <div class="sigma-tooltip-footer">Pocet spojení: {{degree}}</div>',
-	    renderer: function(node, template) {
-	      node.degree = this.degree(node.id);
-	      return Mustache.render(template, node);
-	    }
-	  }
-	};
+    var config = {
+        node: {
+            show: 'overNode',
+            hide: 'clickNode',
+            cssClass: 'sigma-tooltip',
+            position: 'top',
+            template: '',
+            renderer: function(node, template) {
+                node.degree = this.degree(node.id);
+                template = '<div class="arrow"></div>' +
+                           '<div class="sigma-tooltip-header">' + node.type + '</div>' +
+                           '<div class="sigma-tooltip-body">' +
+                           '<table>' +
+                           '<tr><th>id:</th><td>' + node.id + '</td></tr>';
+                // Loop all properties
+                for (key in node.neo4j_data) {
+                    template += '<tr><th>' + key + ':</th><td>' + node.neo4j_data[key] +'</td></tr>';
+                }
+                template += '</table>' +
+                            '</div>' +
+                            '<div class="sigma-tooltip-footer">Degree: {{degree}}</div>';
+                return Mustache.render(template, node);
+            }
+        }
+    };
 
 	var tooltips = sigma.plugins.tooltips(initSigma, initSigma.renderers[0], config);
 		var fa = sigma.layouts.configForceLink(initSigma, {
