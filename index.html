@@ -251,34 +251,16 @@
 	    edgeLabelThreshold: 2.0,
 	}});
 
-	function customiseGraph(s) {			
-	    s.graph.nodes().forEach(function(n) {		
-		    if (n.neo4j_labels[0] == 'Neziskova'){
-			n.color = '#4acfc8'; 
-		    }
-		    if (n.neo4j_labels[0] == 'Firma'){
-			n.color = '#FF6C7C';
-		    }
-		    if (n.neo4j_labels[0] == 'Statni'){
-			n.color = '#FFA500';
-		    }
-		    if (n.neo4j_labels[0] == 'Univerzita'){
-			n.color = '#4356C0';
-		    }
-		    if (n.neo4j_labels[0] == 'Projekt'){
-			n.color = '#F25A29';
-		    }
-		    if (n.neo4j_labels[0] == 'zdravotnicke_zarizeni'){
-			n.color = '#DA70D6';
-		    }
-		    if (n.neo4j_labels[0] == 'Konference'){
-			n.color = '#DFE1E3';
-		    }					            				    
-		    n.label = n.neo4j_data.title;
-		    n.size = 16.0;
-		    n.fixed = false;	   	    
-	});  
-  
+    function customiseGraph(s) {
+        s.graph.nodes().forEach(function(n) {
+            if (n.neo4j_labels[0] == 'MARKET')  { n.color = '#6DCE9E'; }
+            if (n.neo4j_labels[0] == 'COMPANY') { n.color = '#DE9BF9'; }
+            if (n.neo4j_labels[0] == 'CITY')    { n.color = '#68BDF6'; }
+            n.label = n.neo4j_data.title;
+            n.size = 16.0;
+            n.fixed = false;
+    });
+
 	 s.graph.edges().forEach(function(n) {
 		n.color = '#989898';		
 		n.size = 2.1;
@@ -329,7 +311,7 @@
 	}  
 	
 	sigma.neo4j.cypher(
-	  { url: 'url', user: 'user', password: 'password' },
+	{ url: 'http://localhost:7474', user: 'neo4j', password: 'password' },
 		'MATCH (n) OPTIONAL MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 250',
 		initSigma,
 		customiseGraph
