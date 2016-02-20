@@ -282,9 +282,13 @@
                            '<div class="sigma-tooltip-body">' +
                            '<table>' +
                            '<tr><th>id:</th><td>' + node.id + '</td></tr>';
-                // Loop all properties
+                // Filter fields
+                var filter = ['logo', 'url', 'permalink'];
+                // Loop and display fields
                 for (key in node.neo4j_data) {
-                    template += '<tr><th>' + key + ':</th><td>' + node.neo4j_data[key] +'</td></tr>';
+                    if (filter.indexOf(key) == -1) {
+                        template += '<tr><th>' + formatFieldName(key) + ':</th><td>' + node.neo4j_data[key] +'</td></tr>';
+                    }
                 }
                 template += '</table>' +
                             '</div>' +
@@ -293,6 +297,12 @@
             }
         }
     };
+
+    // Format field name from 'some_field' to 'Some Field'
+    function formatFieldName(str) {
+        str = str.replace(/_/g, ' ');
+        return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    }
 
 	var tooltips = sigma.plugins.tooltips(initSigma, initSigma.renderers[0], config);
 		var fa = sigma.layouts.configForceLink(initSigma, {
@@ -317,7 +327,7 @@
 	
 	sigma.neo4j.cypher(
 	{ url: 'http://localhost:7474', user: 'neo4j', password: 'password' },
-		'MATCH (n) OPTIONAL MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 250',
+		'MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 20',
 		initSigma,
 		customiseGraph
 	);
