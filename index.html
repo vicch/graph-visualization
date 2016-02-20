@@ -300,7 +300,9 @@
 
     // Format field name from 'some_field' to 'Some Field'
     function formatFieldName(str) {
+        // Replace underscore with space
         str = str.replace(/_/g, ' ');
+        // Uppercase every first letter
         return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
     }
 
