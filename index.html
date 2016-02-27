@@ -253,86 +253,87 @@
 	}});
 
     function customiseGraph(s) {
+
         s.graph.nodes().forEach(function(n) {
             if (n.neo4j_labels[0] == 'MARKET')  { n.color = '#6DCE9E'; }
             if (n.neo4j_labels[0] == 'COMPANY') { n.color = '#DE9BF9'; }
             if (n.neo4j_labels[0] == 'CITY')    { n.color = '#68BDF6'; }
             n.label = n.neo4j_data.name; // Software, Internet, Mobile, etc.
             n.type  = n.neo4j_labels[0]; // MARKET, COMPANY, CITY, etc.
-            n.size = 16.0;
+            n.size = 20.0 + 10 * s.graph.degree(n.id);
             n.fixed = false;
-    });
+        });
 
-	 s.graph.edges().forEach(function(n) {
-		n.color = '#989898';		
-		n.size = 2.1;
-	});
-		
-    var config = {
-        node: {
-            show: 'overNode',
-            hide: 'clickNode',
-            cssClass: 'sigma-tooltip',
-            position: 'top',
-            template: '',
-            renderer: function(node, template) {
-                node.degree = this.degree(node.id);
-                template = '<div class="arrow"></div>' +
-                           '<div class="sigma-tooltip-header">' + node.type + '</div>' +
-                           '<div class="sigma-tooltip-body">' +
-                           '<table>' +
-                           '<tr><th>id:</th><td>' + node.id + '</td></tr>';
-                // Filter fields
-                var filter = ['logo', 'url', 'permalink'];
-                // Loop and display fields
-                for (key in node.neo4j_data) {
-                    if (filter.indexOf(key) == -1) {
-                        template += '<tr><th>' + formatFieldName(key) + ':</th><td>' + node.neo4j_data[key] +'</td></tr>';
+        s.graph.edges().forEach(function(n) {
+            n.color = '#989898';
+            n.size = 2.1;
+        });
+
+        var config = {
+            node: {
+                show: 'overNode',
+                hide: 'clickNode',
+                cssClass: 'sigma-tooltip',
+                position: 'top',
+                template: '',
+                renderer: function(node, template) {
+                    node.degree = this.degree(node.id);
+                    template = '<div class="arrow"></div>' +
+                               '<div class="sigma-tooltip-header">' + node.type + '</div>' +
+                               '<div class="sigma-tooltip-body">' +
+                               '<table>' +
+                               '<tr><th>id:</th><td>' + node.id + '</td></tr>';
+                    // Filter fields
+                    var filter = ['logo', 'url', 'permalink'];
+                    // Loop and display fields
+                    for (key in node.neo4j_data) {
+                        if (filter.indexOf(key) == -1) {
+                            template += '<tr><th>' + formatFieldName(key) + ':</th><td>' + node.neo4j_data[key] +'</td></tr>';
+                        }
                     }
+                    template += '</table>' +
+                                '</div>' +
+                                '<div class="sigma-tooltip-footer">Degree: {{degree}}</div>';
+                    return Mustache.render(template, node);
                 }
-                template += '</table>' +
-                            '</div>' +
-                            '<div class="sigma-tooltip-footer">Degree: {{degree}}</div>';
-                return Mustache.render(template, node);
             }
-        }
-    };
+        };
 
-    // Format field name from 'some_field' to 'Some Field'
-    function formatFieldName(str) {
-        // Replace underscore with space
-        str = str.replace(/_/g, ' ');
-        // Uppercase every first letter
-        return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+        // Format field name from 'some_field' to 'Some Field'
+        function formatFieldName(str) {
+            // Replace underscore with space
+            str = str.replace(/_/g, ' ');
+            // Uppercase every first letter
+            return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+        }
+
+        var tooltips = sigma.plugins.tooltips(initSigma, initSigma.renderers[0], config);
+        var fa = sigma.layouts.configForceLink(initSigma, {
+            linLogMode: false, 
+            adjustSizes: true,
+            worker: true,
+            autoStop: true,
+            background: true,
+            scaleRatio: 3,
+            gravity: 2,
+            easing: 'cubicInOut',
+            nodeSiblingsScale: 5,
+            barnesHutOptimize: true,
+        });
+        sigma.layouts.startForceLink();
+        var cam = initSigma.camera;
+        sigma.misc.animation.camera(cam, {
+            ratio: 1.9
+        });
+        initSigma.refresh();
     }
 
-	var tooltips = sigma.plugins.tooltips(initSigma, initSigma.renderers[0], config);
-		var fa = sigma.layouts.configForceLink(initSigma, {
-		 linLogMode: false, 
-		 adjustSizes: true,
-		 worker: true,
-		 autoStop: true,
-		 background: true,
-		 scaleRatio: 3,
-		 gravity: 2,
-		 easing: 'cubicInOut',
-		 nodeSiblingsScale: 5,
-		 barnesHutOptimize: true,
-		});
-	sigma.layouts.startForceLink();
-	var cam = initSigma.camera;
-	sigma.misc.animation.camera(cam, { 
-		ratio: 1.9
-		});
-	initSigma.refresh();
-	}  
-	
-	sigma.neo4j.cypher(
-	{ url: 'http://localhost:7474', user: 'neo4j', password: 'password' },
-		'MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 20',
-		initSigma,
-		customiseGraph
-	);
+    sigma.neo4j.cypher(
+        { url: 'http://localhost:7474', user: 'neo4j', password: 'password' },
+        'MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 20',
+        initSigma,
+        customiseGraph
+    );
 
 	var activeState = sigma.plugins.activeState(initSigma);
 	var dragListener = sigma.plugins.dragNodes(initSigma, initSigma.renderers[0], activeState);
