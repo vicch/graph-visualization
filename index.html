@@ -97,122 +97,140 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.3);
             border-radius: 6px;
         }
-	.sigma-tooltip-header {
-	   font-variant: small-caps;
-	   font-size: 130%;
-	   font-weight: bold;
-	   color: #003366;
-	   background-color: #D8D8D8; 
-	   border-bottom: 1px solid #181818;
-	   padding: 10px;
-	}
-	.sigma-tooltip-body {
-	   padding: 10px;
-	}
-	.sigma-tooltip-body th {
-	  color: #303030;
-	  text-align: left;
-	}
-	.sigma-tooltip-footer {
-	  padding: 10px;
-	  border-top: 1px solid #181818;
-	}
-	.sigma-tooltip > .arrow {
-	  border-width: 10px;
-	  position: absolute;
-	  display: block;
-	  width: 0;
-	  height: 0;
-	  border-color: transparent;
-	  border-style: solid;
-	}
-	.sigma-tooltip.top {
-	   margin-top: -12px;
-	   color: #585858; 	
-	}
-	.sigma-tooltip.top > .arrow {
-	   left: 50%;
-	   bottom: -10px;
-	   margin-left: -10px;
-	   border-top-color: rgb(249, 247, 237);
-	   border-bottom-width: 0;
-	}
-	.sigma-tooltip.bottom {
-	   margin-top: 12px;
-	}
-	.sigma-tooltip.bottom > .arrow {
-	   left: 50%;
-	   top: -10px;
-	   margin-left: -10px;
-	   border-bottom-color: rgb(249, 247, 237);
-	   border-top-width: 0;
-	}
-	.sigma-tooltip.left {
-	   margin-left: -12px;
-	}
-	.sigma-tooltip.left > .arrow {
-	   top: 50%;
-	   right: -10px;
-	   margin-top: -10px;
-	   border-left-color: rgb(249, 247, 237);
-	   border-right-width: 0;
-	}
-	.sigma-tooltip.right {
-	   margin-left: 12px;
-	}
-	.sigma-tooltip.right > .arrow {
-	   top: 50%;
-	   left: -10px;
-	   margin-top: -10px;
-	   border-right-color: rgb(249, 247, 237);
-	   border-left-width: 0;
-	}
-	#control-pane {
-	   top: 10px;
-	   right: 10px;
-	   position: absolute;
-	   width: 230px;
-	   background-color: #F0F0F0;
-	   box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-	}
-	#control-pane > div {
-             margin: 10px;
-	   overflow-x: auto;
-	}
-	.line {
-	   clear: both;
-	   display: block;
-	   width: 100%;
-	   margin: 0;
-	   padding: 12px 0 0 0;
-	   border-bottom: 1px solid #000000;
-	   background: transparent;
-	}
-	h2, h3, h4 {
-	   padding: 0;
-	   font-variant: small-caps;
-	}
-	.green {
-	   color: #437356;
-	}
-	h2.underline {
-	   color: #003366;
-	   background: #D8D8D8;
-	   margin: 0;
-	   border-radius: 2px;
-	   padding: 8px 12px;
-	   font-weight: 700;
-	   border-bottom: 1px solid #181818;	
-	}
-	.hidden {
-	   display: none;
-	   visibility: hidden;
-	}
-	input[type=range] {
-	   width: 160px;
-	}
+        .sigma-tooltip-header {
+            font-variant: small-caps;
+            font-size: 130%;
+            font-weight: bold;
+            color: #003366;
+            background-color: #D8D8D8; 
+            border-bottom: 1px solid #181818;
+            padding: 10px;
+        }
+        .sigma-tooltip-body {
+            padding: 10px;
+        }
+        .sigma-tooltip-body th {
+            color: #303030;
+            text-align: left;
+        }
+        .sigma-tooltip-footer {
+            padding: 10px;
+            border-top: 1px solid #181818;
+        }
+        .sigma-tooltip > .arrow {
+            border-width: 10px;
+            position: absolute;
+            display: block;
+            width: 0;
+            height: 0;
+            border-color: transparent;
+            border-style: solid;
+        }
+        .sigma-tooltip.top {
+            margin-top: -12px;
+            color: #585858; 	
+        }
+        .sigma-tooltip.top > .arrow {
+            left: 50%;
+            bottom: -10px;
+            margin-left: -10px;
+            border-top-color: rgb(249, 247, 237);
+            border-bottom-width: 0;
+        }
+        .sigma-tooltip.bottom {
+            margin-top: 12px;
+        }
+        .sigma-tooltip.bottom > .arrow {
+            left: 50%;
+            top: -10px;
+            margin-left: -10px;
+            border-bottom-color: rgb(249, 247, 237);
+            border-top-width: 0;
+        }
+        .sigma-tooltip.left {
+            margin-left: -12px;
+        }
+        .sigma-tooltip.left > .arrow {
+            top: 50%;
+            right: -10px;
+            margin-top: -10px;
+            border-left-color: rgb(249, 247, 237);
+            border-right-width: 0;
+        }
+        .sigma-tooltip.right {
+            margin-left: 12px;
+        }
+        .sigma-tooltip.right > .arrow {
+            top: 50%;
+            left: -10px;
+            margin-top: -10px;
+            border-right-color: rgb(249, 247, 237);
+            border-left-width: 0;
+        }
+        #control-pane {
+            top: 10px;
+            right: 10px;
+            position: absolute;
+            width: 230px;
+            background-color: #F0F0F0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        #control-pane > div {
+            margin: 10px;
+            overflow-x: auto;
+        }
+        .line {
+            clear: both;
+            display: block;
+            width: 100%;
+            margin: 0;
+            padding: 12px 0 0 0;
+            border-bottom: 1px solid #000000;
+            background: transparent;
+        }
+        h2, h3, h4 {
+            padding: 0;
+            font-variant: small-caps;
+        }
+        .green {
+            color: #437356;
+        }
+        h2.underline {
+            color: #003366;
+            background: #D8D8D8;
+            margin: 0;
+            border-radius: 2px;
+            padding: 8px 12px;
+            font-weight: 700;
+            border-bottom: 1px solid #181818;
+        }
+        .hidden {
+            display: none;
+            visibility: hidden;
+        }
+        input[type=range] {
+            width: 160px;
+        }
     </style>
-    <div id="graph-container">
+    <div id="graph-container"></div>
+    <div id="control-pane">
+        <h2 class="underline">filters</h2>
+        <!-- <div>
+            <h3>min degree <span id="min-degree-val">0</span></h3>
+            0 <input id="min-degree" type="range" min="0" max="0" value="0"> <span id="max-degree-value">0</span><br>
+        </div> -->
+        <div>
+            <h3>node category</h3>
+            <select id="node-category">
+                <option value="" selected>All categories</option>
+            </select>
+        </div>
+        <!-- <span class="line"></span>
+        <div>
+            <button id="reset-btn">Reset filters</button>
+            <button id="export-btn">Export</button>
+        </div>
+        <div id="dump" class="hidden"></div> -->
     </div>
 </div>
 
@@ -226,31 +244,33 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
 
 <script>
-	var initSigma = new sigma ({renderer: {
-	    container: document.getElementById('graph-container'),
-	    type: 'canvas'
-	},
-	settings: {
-	    labelThreshold: 20,
-	    defaultLabelSize: 13,
-	    labelSize: 'fixed',  
-	    drawEdgeLabels: true,
-	    minNodeSize: 1.0,
-	    maxNodeSize: 25.0,
-	    maxEdgeSize: 2.1,	
-	    labelAlignment: 'center',
-	    dragNodeStickiness: 0.01,
-	    minArrowSize: 15,
-	    drawEdges: true,
-	    enableHovering: true,
-	    sideMargin: 2,
-	    scalingMode: 'outside',
-	    animationsTime: 1000,
-	    enableHovering: true, 
-	    defaultEdgeLabelSize: 12,
-	    edgeLabelSize: 'fixed',
-	    edgeLabelThreshold: 2.0,
-	}});
+    var initSigma = new sigma({
+        renderer: {
+            container: document.getElementById('graph-container'),
+            type: 'canvas'
+        },
+        settings: {
+            labelThreshold: 20,
+            defaultLabelSize: 13,
+            labelSize: 'fixed',  
+            drawEdgeLabels: true,
+            minNodeSize: 5.0,
+            maxNodeSize: 100.0,
+            maxEdgeSize: 2.1,	
+            labelAlignment: 'center',
+            dragNodeStickiness: 0.01,
+            minArrowSize: 15,
+            drawEdges: true,
+            enableHovering: true,
+            sideMargin: 2,
+            scalingMode: 'outside',
+            animationsTime: 1000,
+            enableHovering: true, 
+            defaultEdgeLabelSize: 12,
+            edgeLabelSize: 'fixed',
+            edgeLabelThreshold: 2.0,
+        }
+    });
 
     function customiseGraph(s) {
 
@@ -260,7 +280,7 @@
             if (n.neo4j_labels[0] == 'CITY')    { n.color = '#68BDF6'; }
             n.label = n.neo4j_data.name; // Software, Internet, Mobile, etc.
             n.type  = n.neo4j_labels[0]; // MARKET, COMPANY, CITY, etc.
-            n.size = 20.0 + 10 * s.graph.degree(n.id);
+            n.size = 5.0 + 3 * s.graph.degree(n.id);
             n.fixed = false;
         });
 
@@ -272,7 +292,7 @@
         var config = {
             node: {
                 show: 'overNode',
-                hide: 'clickNode',
+                hide: 'outNode',
                 cssClass: 'sigma-tooltip',
                 position: 'top',
                 template: '',
@@ -283,11 +303,11 @@
                                '<div class="sigma-tooltip-body">' +
                                '<table>' +
                                '<tr><th>id:</th><td>' + node.id + '</td></tr>';
-                    // Filter fields
-                    var filter = ['logo', 'url', 'permalink'];
+                    // Exclude fields
+                    var excludeFields = ['logo', 'url', 'permalink'];
                     // Loop and display fields
                     for (key in node.neo4j_data) {
-                        if (filter.indexOf(key) == -1) {
+                        if (excludeFields.indexOf(key) == -1) {
                             template += '<tr><th>' + formatFieldName(key) + ':</th><td>' + node.neo4j_data[key] +'</td></tr>';
                         }
                     }
@@ -315,7 +335,7 @@
             autoStop: true,
             background: true,
             scaleRatio: 3,
-            gravity: 2,
+            gravity: 20,
             easing: 'cubicInOut',
             nodeSiblingsScale: 5,
             barnesHutOptimize: true,
@@ -326,19 +346,63 @@
             ratio: 1.9
         });
         initSigma.refresh();
+
+        // Initialize the Filter API
+        filter = sigma.plugins.filter(s);
+
+        updatePane(s.graph, filter);
+    }
+
+    function updatePane(graph, filter) {
+        var categories = {};
+
+        // Read nodes
+        graph.nodes().forEach(function(n) {
+            if (typeof n.neo4j_data.category !== 'undefined') {
+                // Split categories up
+                n.neo4j_data.category.split('|').forEach(function(c) {
+                    if (c.length > 0) categories[c] = true;
+                });
+            }
+        });
+
+        // Node category
+        var nodecategoryElt = document.getElementById('node-category');
+        Object.keys(categories).sort().forEach(function(c) {
+            var optionElt = document.createElement('option');
+                optionElt.text = c;
+                nodecategoryElt.add(optionElt);
+        });
+    }
+
+    function applyCategoryFilter(e) {
+        var c = e.target[e.target.selectedIndex].value;
+        filter
+            .undo('node-category')
+            .nodesBy(
+                function(n, options) {
+                    // Node's category(s) contains seleted category
+                    return !c.length || (typeof n.neo4j_data.category !== 'undefined' && n.neo4j_data.category.split('|').indexOf(c) !== -1);
+                }, {},
+                'node-category'
+            )
+            .apply();
     }
 
     sigma.neo4j.cypher(
         { url: 'http://localhost:7474', user: 'neo4j', password: 'password' },
-        'MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 20',
+        'MATCH (n)-[r]->(m) RETURN n,r,m LIMIT 100',
         initSigma,
         customiseGraph
     );
 
-	var activeState = sigma.plugins.activeState(initSigma);
-	var dragListener = sigma.plugins.dragNodes(initSigma, initSigma.renderers[0], activeState);
-	var select = sigma.plugins.select(initSigma, activeState);
-	var keyboard = sigma.plugins.keyboard(initSigma, initSigma.renderers[0]);
-	select.bindKeyboard(keyboard);
+    var activeState = sigma.plugins.activeState(initSigma);
+    var dragListener = sigma.plugins.dragNodes(initSigma, initSigma.renderers[0], activeState);
+    var select = sigma.plugins.select(initSigma, activeState);
+    var keyboard = sigma.plugins.keyboard(initSigma, initSigma.renderers[0]);
+    select.bindKeyboard(keyboard);
+
+    // Category filter event
+    document.getElementById('node-category').addEventListener('change', applyCategoryFilter);
 
 </script>
