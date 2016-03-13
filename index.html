@@ -225,6 +225,13 @@
                 <option value="" selected>All categories</option>
             </select>
         </div>
+        <span class="line"></span>
+        <div>
+            <h3>node market</h3>
+            <select id="node-market">
+                <option value="" selected>All markets</option>
+            </select>
+        </div>
         <!-- <span class="line"></span>
         <div>
             <button id="reset-btn">Reset filters</button>
@@ -367,6 +374,7 @@
 
     function updatePane(graph, filter) {
         var categories = {};
+        var markets = {};
 
         // Read nodes
         graph.nodes().forEach(function(n) {
@@ -376,6 +384,9 @@
                     if (c.length > 0) categories[c] = true;
                 });
             }
+            if (typeof n.neo4j_data.market !== 'undefined') {
+                markets[n.neo4j_data.market] = true;
+            }
         });
 
         // Node category
@@ -384,6 +395,14 @@
             var optionElt = document.createElement('option');
                 optionElt.text = c;
                 nodecategoryElt.add(optionElt);
+        });
+
+        // Node market
+        var nodemarketElt = document.getElementById('node-market');
+        Object.keys(markets).sort().forEach(function(c) {
+            var optionElt = document.createElement('option');
+                optionElt.text = c;
+                nodemarketElt.add(optionElt);
         });
     }
 
@@ -397,6 +416,20 @@
                     return !c.length || (typeof n.neo4j_data.category !== 'undefined' && n.neo4j_data.category.split('|').indexOf(c) !== -1);
                 }, {},
                 'node-category'
+            )
+            .apply();
+    }
+
+    function applyMarketFilter(e) {
+        var c = e.target[e.target.selectedIndex].value;
+        filter
+            .undo('node-market')
+            .nodesBy(
+                function(n, options) {
+                    // Node's market equals seleted market
+                    return !c.length || (typeof n.neo4j_data.market !== 'undefined' && n.neo4j_data.market.trim() === c);
+                }, {},
+                'node-market'
             )
             .apply();
     }
@@ -416,5 +449,8 @@
 
     // Category filter event
     document.getElementById('node-category').addEventListener('change', applyCategoryFilter);
+
+    // Market filter event
+    document.getElementById('node-market').addEventListener('change', applyMarketFilter);
 
 </script>
