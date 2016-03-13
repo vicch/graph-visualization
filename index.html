@@ -254,8 +254,8 @@
             defaultLabelSize: 13,
             labelSize: 'fixed',  
             drawEdgeLabels: true,
-            minNodeSize: 5.0,
-            maxNodeSize: 100.0,
+            minNodeSize: 10.0,
+            maxNodeSize: 50.0,
             maxEdgeSize: 2.1,	
             labelAlignment: 'center',
             dragNodeStickiness: 0.01,
@@ -280,7 +280,7 @@
             if (n.neo4j_labels[0] == 'CITY')    { n.color = '#68BDF6'; }
             n.label = n.neo4j_data.name; // Software, Internet, Mobile, etc.
             n.type  = n.neo4j_labels[0]; // MARKET, COMPANY, CITY, etc.
-            n.size = 5.0 + 3 * s.graph.degree(n.id);
+            n.size = 10.0 + 5 * s.graph.degree(n.id);
             n.fixed = false;
         });
 
@@ -349,8 +349,20 @@
 
         // Initialize the Filter API
         filter = sigma.plugins.filter(s);
-
         updatePane(s.graph, filter);
+
+        // Configure the ForceLink algorithm:
+        var fa = sigma.layouts.configForceLink(s, {
+            worker: true,
+            autoStop: true,
+            background: true,
+            scaleRatio: 10,
+            gravity: 3,
+            easing: 'cubicInOut'
+        });
+
+        // Start the ForceLink algorithm:
+        sigma.layouts.startForceLink();
     }
 
     function updatePane(graph, filter) {
