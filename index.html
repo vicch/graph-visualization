@@ -87,7 +87,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            position: absolute;           
+            position: absolute;
         }
         .sigma-tooltip {
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -102,7 +102,7 @@
             font-size: 130%;
             font-weight: bold;
             color: #003366;
-            background-color: #D8D8D8; 
+            background-color: #D8D8D8;
             border-bottom: 1px solid #181818;
             padding: 10px;
         }
@@ -128,7 +128,7 @@
         }
         .sigma-tooltip.top {
             margin-top: -12px;
-            color: #585858; 	
+            color: #585858;
         }
         .sigma-tooltip.top > .arrow {
             left: 50%;
@@ -259,11 +259,11 @@
         settings: {
             labelThreshold: 20,
             defaultLabelSize: 13,
-            labelSize: 'fixed',  
+            labelSize: 'fixed',
             drawEdgeLabels: true,
             minNodeSize: 10.0,
             maxNodeSize: 50.0,
-            maxEdgeSize: 2.1,	
+            maxEdgeSize: 2.1,
             labelAlignment: 'center',
             dragNodeStickiness: 0.01,
             minArrowSize: 15,
@@ -272,7 +272,7 @@
             sideMargin: 2,
             scalingMode: 'outside',
             animationsTime: 1000,
-            enableHovering: true, 
+            enableHovering: true,
             defaultEdgeLabelSize: 12,
             edgeLabelSize: 'fixed',
             edgeLabelThreshold: 2.0,
@@ -335,23 +335,24 @@
         }
 
         var tooltips = sigma.plugins.tooltips(initSigma, initSigma.renderers[0], config);
-        var fa = sigma.layouts.configForceLink(initSigma, {
-            linLogMode: false, 
-            adjustSizes: true,
-            worker: true,
-            autoStop: true,
-            background: true,
-            scaleRatio: 3,
-            gravity: 20,
-            easing: 'cubicInOut',
-            nodeSiblingsScale: 5,
-            barnesHutOptimize: true,
-        });
-        sigma.layouts.startForceLink();
+        // var fa = sigma.layouts.configForceLink(initSigma, {
+        //     linLogMode: false,
+        //     adjustSizes: true,
+        //     worker: true,
+        //     autoStop: true,
+        //     background: true,
+        //     scaleRatio: 3,
+        //     gravity: 20,
+        //     easing: 'cubicInOut',
+        //     nodeSiblingsScale: 5,
+        //     barnesHutOptimize: true,
+        // });
+
         var cam = initSigma.camera;
         sigma.misc.animation.camera(cam, {
             ratio: 1.9
         });
+
         initSigma.refresh();
 
         // Initialize the Filter API
@@ -412,12 +413,33 @@
             .undo('node-category')
             .nodesBy(
                 function(n, options) {
-                    // Node's category(s) contains seleted category
-                    return !c.length || (typeof n.neo4j_data.category !== 'undefined' && n.neo4j_data.category.split('|').indexOf(c) !== -1);
+                    // Check current node
+                    var match = matchCategory(n, c);
+                    if (!match) {
+                        // Check adjacent nodes
+                        this.graph.adjacentNodes(n.id).forEach(function(adjacentNode) {
+                            if (matchCategory(adjacentNode, c)) {
+                                match = true;
+                                return;
+                            }
+                        });
+                    }
+                    return !c.length || match;
                 }, {},
                 'node-category'
             )
             .apply();
+    }
+
+    // True if a node is "COMPANY" and it belongs to a certain category
+    function matchCategory(n, c) {
+        var result = (
+            typeof n.neo4j_labels !== 'undefined' &&
+            n.neo4j_labels[0] === 'COMPANY' &&
+            typeof n.neo4j_data.category !== 'undefined' &&
+            n.neo4j_data.category.split('|').indexOf(c) !== -1
+        );
+        return result;
     }
 
     function applyMarketFilter(e) {
@@ -426,12 +448,33 @@
             .undo('node-market')
             .nodesBy(
                 function(n, options) {
-                    // Node's market equals seleted market
-                    return !c.length || (typeof n.neo4j_data.market !== 'undefined' && n.neo4j_data.market.trim() === c);
+                    // Check current node
+                    var match = matchMarket(n, c);
+                    if (!match) {
+                        // Check adjacent nodes
+                        this.graph.adjacentNodes(n.id).forEach(function(adjacentNode) {
+                            if (matchMarket(adjacentNode, c)) {
+                                match = true;
+                                return;
+                            }
+                        });
+                    }
+                    return !c.length || match;
                 }, {},
                 'node-market'
             )
             .apply();
+    }
+
+    // True if a node is "COMPANY" and it belongs to a certain market
+    function matchMarket(n, m) {
+        var result = (
+            typeof n.neo4j_labels !== 'undefined' &&
+            n.neo4j_labels[0] === 'COMPANY' &&
+            typeof n.neo4j_data.market !== 'undefined' &&
+            n.neo4j_data.market.trim() === m
+        );
+        return result;
     }
 
     sigma.neo4j.cypher(
